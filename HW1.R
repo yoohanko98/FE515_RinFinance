@@ -1,6 +1,6 @@
 # Assignment 1
 # Yoohan Ko
-# "I pledge my honor I have abided by the Stevens Honor System."
+# "I pledge my honor I have abided by the Stevens Honor System." -YHK
 # FE 515 R in Finance
 # Fall 2019, Stevens Institute of Technology
 
@@ -10,8 +10,6 @@
 # - You have to apply ”Google R style” in this assignment
 # - You have to explain your code for Q2 and Q3 (When leaving comments in the R
 # code, please use #)
-
-
 
 # Question 2: Self-defined function
 # 2520 is the smallest number that can be divided by each of the numbers from 
@@ -26,14 +24,14 @@
 # This is a function that takes two inputs and returns the LCM
 #https://www.datamentor.io/r-programming/examples/least-common-multiple/
 TwoLCM <- function(x, y){
+  # check to see whether x or y is larger
   if (x > y) {
     greater = x
   } else {
     greater = y
   }
   while(TRUE) {
-    # print("running two LCM function")
-    # print(x, y)
+    # iterate and if lcm is found, set num.lcm to the new number
     if ((greater %% x == 0) && (greater %% y == 0)) {
       num.lcm = greater
       break
@@ -47,7 +45,7 @@ TwoLCM <- function(x, y){
 MultipleLCM <- function(low, high){
   temp <- 0
   for(i in low:high - 1){
-    # print(i)
+    # for initial case with low and low + 1
     if(i == low){
       temp <- TwoLCM(i, i + 1)
     }
@@ -60,8 +58,6 @@ MultipleLCM <- function(low, high){
   }
   return(temp)
 }
-
-# VectorMultiple.LCM <- function()
 
 # testing the function
 MultipleLCM(1, 2) # correct answer is 2
@@ -164,9 +160,3 @@ for(i in tick.dow30){
 # by yourself. (Additional information: For your convenient, I already 
 #               delete some Dow companies which are not listed in S&P 100. 
 #               Therefore, it is not a fully list.)
-
-
-
-
-
-
