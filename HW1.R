@@ -25,8 +25,8 @@
 
 # This is a function that takes two inputs and returns the LCM
 #https://www.datamentor.io/r-programming/examples/least-common-multiple/
-Two.LCM <- function(x, y){
-  if(x > y) {
+TwoLCM <- function(x, y){
+  if (x > y) {
     greater = x
   } else {
     greater = y
@@ -34,25 +34,25 @@ Two.LCM <- function(x, y){
   while(TRUE) {
     # print("running two LCM function")
     # print(x, y)
-    if((greater %% x == 0) && (greater %% y == 0)) {
-      Num.LCM = greater
+    if ((greater %% x == 0) && (greater %% y == 0)) {
+      num.lcm = greater
       break
     }
     greater = greater + 1
   }
-  return(Num.LCM)
+  return (num.lcm)
 }
 
 # this function runs LCM recursively of temp and i + 1
-Multiple.LCM <- function(low, high){
+MultipleLCM <- function(low, high){
   temp <- 0
   for(i in low:high - 1){
     # print(i)
     if(i == low){
-      temp <- Two.LCM(i, i + 1)
+      temp <- TwoLCM(i, i + 1)
     }
     if(temp != 0){
-      temp <- Two.LCM(temp, i + 1)
+      temp <- TwoLCM(temp, i + 1)
     }
     # print("Running multiple LCM")
     # print(temp)
@@ -64,13 +64,13 @@ Multiple.LCM <- function(low, high){
 # VectorMultiple.LCM <- function()
 
 # testing the function
-Multiple.LCM(1, 2) # correct answer is 2
+MultipleLCM(1, 2) # correct answer is 2
 
-Multiple.LCM(6, 9) # correct answer is 504
+MultipleLCM(6, 9) # correct answer is 504
 
-Multiple.LCM(1, 10) #correct answer is 2520
+MultipleLCM(1, 10) #correct answer is 2520
 
-Multiple.LCM(6, 12) # correct answer is 27720
+MultipleLCM(6, 12) # correct answer is 27720
 
 # Question 3: “apply” function
 # Download JPM.csv from canvas and read this table in R using command. 
@@ -78,31 +78,31 @@ Multiple.LCM(6, 12) # correct answer is 27720
 # Importing data set provided
 setwd(paste("/Users/yoohanko98/OneDrive - stevens.edu/Stevens/Semester 7/
             FE 515 (R in Finance)/HW/FE515_RinFinance/HW1", sep=""))
-JPM2018 = read.csv("JPM.csv", header = TRUE)
+jpm2018 = read.csv("JPM.csv", header = TRUE)
 
 # print out the first row to check headers
-head(JPM2018, 1)
-typeof(JPM2018)
+head(jpm2018, 1)
+typeof(jpm2018)
 
 # For this table, name it as JPM2018 and do following things:
 # - Create a sub-table which only contains Open, High, Low and Close
-Sub.JPM2018 <- JPM2018[, 2:5, ]
+sub.jpm2018 <- jpm2018[, 2:5, ]
 
 # - Using sapply() we mentioned in class to calculate mean value for each 
 # column and save it as a vector
-M1.JPM2018 <- sapply(JPM2018[, 2:7], mean)
-M1.JPM2018
-typeof(M1.JPM2018)
+m1.jpm2018 <- sapply(jpm2018[, 2:7], mean)
+m1.jpm2018
+typeof(m1.jpm2018)
 
 # - Using apply() we mentioned in class to calculate mean value for each row 
 # and save it as a 3 by 5 matrix, the data should be assigned by row.
 
 # creating a temporary vector to store mean of rows from JPM2018
-temp.M2 <- apply(JPM2018[1:15, 2:7], 1, mean)
+temp.m2 <- apply(jpm2018[1:15, 2:7], 1, mean)
 
 # arranging data from temp.M2 into a 3 x 5 matrix by row
-M2 = matrix(temp.M2, nrow = 3, ncol = 5, byrow = TRUE)
-M2
+m2 = matrix(temp.m2, nrow = 3, ncol = 5, byrow = TRUE)
+m2
 
 # Question 4: Self-study
 # 1. What’s the difference between ”mapply” and ”lapply”?
@@ -125,19 +125,16 @@ mapply(sum, t1, t2)
 t3 <- 5:9
 t4 <- 10:14
 # Performs LCM of # between 5 and 10, then LCM of # between 6 and 11, etc.
-mapply(Multiple.LCM, t3, t4)s
-
-# If not, explain why.
-
+mapply(MultipleLCM, t3, t4)
 
 # Question 5: Loops and paste()
 # Download Dow30.csv and SP100.csv and do the following:
 
-DOW30 = read.csv("Dow30.csv", header = TRUE)
-Tick.DOW30 = DOW30[, 2]
+dow30 = read.csv("Dow30.csv", header = TRUE)
+tick.dow30 = dow30[, 2]
 # head(DOW30, 1)
-SP100 = read.csv("SP100.csv", header = TRUE)
-Tick.SP100 = SP100[, 1]
+sp100 = read.csv("SP100.csv", header = TRUE)
+tick.sp100 = sp100[, 1]
 # head(SP100, 1)
 
 # These two files are the list of constituents of S&P100 and the list of Dow 
@@ -151,11 +148,11 @@ Tick.SP100 = SP100[, 1]
 # "AAPL--1"
 # ...
 
-for(i in Tick.DOW30){
-  Tick.Temp <- i
+for(i in tick.dow30){
+  tick.temp <- i
   counter <- 1
-  for(j in Tick.SP100){
-    if(Tick.Temp == j){
+  for(j in tick.sp100){
+    if(tick.temp == j){
       output <- paste(j, counter, sep = "--")
       print(output)
     }
