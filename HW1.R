@@ -20,60 +20,64 @@
 # into the function. (For example, your input is 6 and 9, you need to find 
 # the smallest number which can be divided by 6, 7, 8 and 9)
 
-PrimeFactorization <- function() {
-  
-  if (n > 2) {
-    numvec <- numeric()
-    while(n %% 2 == 0){
-      numvec = c(numvec, 2)
-      n = n/2
-    }
-    i = 3
-    while(n != 1) {
-      while(n %% i == 0) {
-        numvec = c(numvec, i)
-        n = n / i
-      }
-      i = i + 2
-    }
+# This is essentially a question asking us to find LCM of these numbers
+# I decided that the easiest way to implement this is to recursively call LCM
+
+# This is a function that takes two inputs and returns the LCM
+#https://www.datamentor.io/r-programming/examples/least-common-multiple/
+Two.LCM <- function(x, y){
+  if(x > y) {
+    greater = x
+  } else {
+    greater = y
   }
-  
-  
+  while(TRUE) {
+    # print("running two LCM function")
+    # print(x, y)
+    if((greater %% x == 0) && (greater %% y == 0)) {
+      Num.LCM = greater
+      break
+    }
+    greater = greater + 1
+  }
+  return(Num.LCM)
 }
 
-get_prime_factors <- function() {
-  num <- as.numeric(readline(prompt="Enter number: " ))
-  n <- num
-  if (n > 2) {
-    numvec <- numeric()
-    while(n %% 2 == 0){
-      numvec = c(numvec, 2)
-      n = n/2
+# this function runs LCM recursively of temp and i + 1
+Multiple.LCM <- function(low, high){
+  temp <- 0
+  for(i in low:high - 1){
+    # print(i)
+    if(i == low){
+      temp <- Two.LCM(i, i + 1)
     }
-    i = 3
-    while(n != 1) {
-      while(n %% i == 0) {
-        numvec = c(numvec, i)
-        n = n/i
-      }
-      i = i + 2
+    if(temp != 0){
+      temp <- Two.LCM(temp, i + 1)
     }
-    sprintf("All Prime Factors of %d are:%s", num, paste0(sort(numvec), collapse = ","))
+    # print("Running multiple LCM")
+    # print(temp)
+    # print(i+1)
   }
-  else {
-    stop("Try a bigger number")
-  }
+  return(temp)
 }
 
+# VectorMultiple.LCM <- function()
 
+# testing the function
+Multiple.LCM(1, 2) # correct answer is 2
 
+Multiple.LCM(6, 9) # correct answer is 504
 
+Multiple.LCM(1, 10) #correct answer is 2520
+
+Multiple.LCM(6, 12) # correct answer is 27720
 
 # Question 3: “apply” function
 # Download JPM.csv from canvas and read this table in R using command. 
 
 # Importing data set provided
-setwd("/Users/yoohanko98/OneDrive - stevens.edu/Stevens/Semester 7/FE 515 (R in Finance)/HW/FE515_RinFinance/HW1")
+setwd(paste("/Users/yoohanko98/OneDrive - stevens.edu/Stevens/Semester 7/
+            FE 515 (R in Finance)/HW/FE515_RinFinance/HW1", sep=""))
 JPM2018 = read.csv("JPM.csv", header = TRUE)
 
 # print out the first row to check headers
@@ -92,28 +96,77 @@ typeof(M1.JPM2018)
 
 # - Using apply() we mentioned in class to calculate mean value for each row 
 # and save it as a 3 by 5 matrix, the data should be assigned by row.
+
+# creating a temporary vector to store mean of rows from JPM2018
 temp.M2 <- apply(JPM2018[1:15, 2:7], 1, mean)
+
+# arranging data from temp.M2 into a 3 x 5 matrix by row
 M2 = matrix(temp.M2, nrow = 3, ncol = 5, byrow = TRUE)
 M2
 
 # Question 4: Self-study
 # 1. What’s the difference between ”mapply” and ”lapply”?
 
+# Answer: 
 # mapply can be used to call a function for multiple vectors/lists at one index
 # at a time. This functionality allows mapply to be described as multivariate.
 
 # 2. How to use ”mapply”? Write an example.
 
+t1 <- 1:4
+t2 <- 5:8
+
+#This would perform: 1+5, 2+6, 3+7, 4+8
+mapply(sum, t1, t2)
 
 # 3. Can you use ”mapply” to the function you created in Question 2?
 # If yes, assign two vectors as inputs for the self-defined function.
+
+t3 <- 5:9
+t4 <- 10:14
+# Performs LCM of # between 5 and 10, then LCM of # between 6 and 11, etc.
+mapply(Multiple.LCM, t3, t4)s
+
 # If not, explain why.
 
 
-
-
 # Question 5: Loops and paste()
+# Download Dow30.csv and SP100.csv and do the following:
 
+DOW30 = read.csv("Dow30.csv", header = TRUE)
+Tick.DOW30 = DOW30[, 2]
+# head(DOW30, 1)
+SP100 = read.csv("SP100.csv", header = TRUE)
+Tick.SP100 = SP100[, 1]
+# head(SP100, 1)
+
+# These two files are the list of constituents of S&P100 and the list of Dow 
+# Jones. You need to find out the index of each Dow company in S&P100 company 
+# list. Don’t make any change in the tables. You must choose a loop to finish 
+# this question.
+# For example, ”MMM” is the first symbol in Dow30.csv, and it is 67th in the
+# table of S&P100. Output example:
+# "MMM--66"
+# "AXP--11"
+# "AAPL--1"
+# ...
+
+for(i in Tick.DOW30){
+  Tick.Temp <- i
+  counter <- 1
+  for(j in Tick.SP100){
+    if(Tick.Temp == j){
+      output <- paste(j, counter, sep = "--")
+      print(output)
+    }
+    counter <- counter + 1
+  }
+}
+
+# In order to accomplish this task, you need to study how to use paste() 
+# by yourself. (Additional information: For your convenient, I already 
+#               delete some Dow companies which are not listed in S&P 100. 
+#               Therefore, it is not a fully list.)
 
 
 
