@@ -61,11 +61,11 @@ hist(temp, xlab = "number of flips")
 # =============================================================================
 
 # Question 2: Data Visualization (50 points)
-  # For this question, you need to download the “BA.csv”. 
-  # This is a sample data set from high frequency trading. 
-  # It contains two type of data: “Trade” and “Quote”. 
-  # Trade data shows the historical transaction price. 
-  # Quote data shows the desired price from traders.
+#   For this question, you need to download the “BA.csv”. 
+#   This is a sample data set from high frequency trading. 
+#   It contains two type of data: “Trade” and “Quote”. 
+#   Trade data shows the historical transaction price. 
+#   Quote data shows the desired price from traders.
 
 rm(list = ls())
 
